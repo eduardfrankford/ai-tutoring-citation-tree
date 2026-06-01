@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Citation Tree — AI-Tutoring in Software Engineering Education</title>
+  <meta name="description" content="Interactive, zoomable visualization of all 977 papers in the forward citation tree of Frankford et al. 2024 (ICSE-SEET), AI-Tutoring in Software Engineering Education." />
+  <meta property="og:title" content="Citation Tree — AI-Tutoring in SE Education" />
+  <meta property="og:description" content="977 papers · max depth 8 · 711 leaves. Click any paper to see its details." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">●</span>
+      <span class="brand-text">Citation&nbsp;Tree</span>
+    </div>
+    <nav class="header-links">
+      <a href="https://doi.org/10.1145/3639474.3640061" target="_blank" rel="noopener">Original paper ↗</a>
+      <a href="https://github.com/eduardfrankford" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Forward citation graph</p>
+      <h1>“AI-Tutoring in Software Engineering Education”</h1>
+      <p class="byline">Frankford, Sauerwein, Bassner, Krusche, Breu — ICSE-SEET 2024</p>
+      <p class="lead">
+        Every paper that cites this one — and every paper that cites <em>those</em> papers,
+        all the way down to the leaves. Built by crawling
+        <a href="https://openalex.org" target="_blank" rel="noopener">OpenAlex</a>
+        outward from the 100 direct citing papers listed by
+        <a href="https://scholar.google.com/scholar?cites=17763308536187984722" target="_blank" rel="noopener">Google Scholar</a>.
+      </p>
+    </div>
+    <div class="stats" id="stats"><!-- populated by JS --></div>
+  </section>
+
+  <section class="controls">
+    <div class="control-group">
+      <input
+        id="search"
+        type="search"
+        placeholder="Search title, author, year…"
+        autocomplete="off"
+      />
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <div class="control-group">
+      <button class="ghost" id="expandAll">Expand all</button>
+      <button class="ghost" id="collapseAll">Collapse all</button>
+      <button class="ghost" id="resetView">Reset view</button>
+    </div>
+    <div class="hint">
+      Scroll to zoom, drag to pan, click a node to focus, double-click to collapse/expand.
+    </div>
+  </section>
+
+  <main class="canvas-wrap">
+    <svg id="canvas" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend" id="legend"><!-- populated by JS --></div>
+    <div class="zoom-controls">
+      <button id="zoomIn" aria-label="Zoom in">+</button>
+      <button id="zoomOut" aria-label="Zoom out">−</button>
+    </div>
+  </main>
+
+  <aside class="detail-panel" id="detail" aria-hidden="true">
+    <button class="close" id="detailClose" aria-label="Close">×</button>
+    <div id="detailBody"></div>
+  </aside>
+
+  <footer class="footer">
+    <p>
+      Data: <a href="https://openalex.org" target="_blank" rel="noopener">OpenAlex</a>
+      &amp; <a href="https://scholar.google.com" target="_blank" rel="noopener">Google Scholar</a>
+      (depth-1 ground truth) ·
+      Source: <a href="https://github.com/eduardfrankford/citation-visualizer" target="_blank" rel="noopener">github.com/eduardfrankford/citation-visualizer</a>
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" defer></script>
+  <script src="viz.js" defer></script>
+</body>
+</html>

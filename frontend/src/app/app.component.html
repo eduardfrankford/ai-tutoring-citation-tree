@@ -1,0 +1,81 @@
+<div class="layout">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">●</span>
+      Citation Visualizer
+    </div>
+    <span class="subtitle">Recursive citation tree · Claude + web search</span>
+  </header>
+
+  <p class="cost-note">
+    Each node = one Claude turn with web search · ~5–20s and ~$0.05–$0.20 per
+    node at Opus 4.8. A depth-2 crawl with 5 children = ~25 calls. Set
+    <code>ANTHROPIC_MODEL=claude-sonnet-4-6</code> to spend ~5× less.
+  </p>
+
+  <section class="controls">
+    <div class="row">
+      <label class="field grow">
+        <span>Paper (URL, DOI, ArXiv, title, or Google Scholar URL)</span>
+        <input
+          type="text"
+          [(ngModel)]="query"
+          (keydown.enter)="start()"
+          placeholder="e.g. 1706.03762, 10.1145/3292500.3330701, or a paper title"
+        />
+      </label>
+      <button class="primary" (click)="start()" [disabled]="status === 'loading'">
+        {{ status === 'loading' ? 'Crawling…' : 'Visualize' }}
+      </button>
+      <button class="ghost" (click)="cancel()" *ngIf="status === 'loading'">Cancel</button>
+      <button class="ghost" (click)="resetView()" *ngIf="nodes.length">Reset view</button>
+    </div>
+    <div class="row sliders">
+      <label class="field">
+        <span>Max depth: <strong>{{ maxDepth }}</strong></span>
+        <input type="range" min="0" max="3" step="1" [(ngModel)]="maxDepth" />
+      </label>
+      <label class="field">
+        <span>Max children per node: <strong>{{ maxPerNode }}</strong></span>
+        <input type="range" min="1" max="20" step="1" [(ngModel)]="maxPerNode" />
+      </label>
+      <label class="field">
+        <span>Max total nodes: <strong>{{ maxTotalNodes }}</strong></span>
+        <input type="range" min="10" max="500" step="10" [(ngModel)]="maxTotalNodes" />
+      </label>
+    </div>
+    <div class="status" [class.error]="status === 'error'" [class.warn]="rateLimited || truncated">
+      <span class="dot" [class.spin]="status === 'loading'"></span>
+      <span>{{ statusMessage || 'Ready.' }}</span>
+      <span class="stats" *ngIf="nodes.length">
+        · {{ nodeCount }} nodes · {{ edgeCount }} edges
+      </span>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="graph">
+      <app-citation-graph
+        [nodes]="nodes"
+        [edges]="edges"
+        [rootId]="rootId"
+        (nodeSelected)="selectNode($event)"
+      ></app-citation-graph>
+    </div>
+
+    <aside class="sidebar" *ngIf="selected as s">
+      <button class="close" (click)="selected = null" aria-label="Close">×</button>
+      <h2>{{ s.title }}</h2>
+      <p class="meta">
+        <span *ngIf="s.year">{{ s.year }}</span>
+        <span *ngIf="s.venue"> · {{ s.venue }}</span>
+        <span *ngIf="s.citationCount != null"> · {{ s.citationCount }} citations</span>
+        <span> · depth {{ s.depth }}</span>
+      </p>
+      <p class="authors" *ngIf="s.authors.length">{{ s.authors.join(', ') }}</p>
+      <p class="links">
+        <a *ngIf="externalLink(s) as link" [href]="link" target="_blank" rel="noopener">Open paper ↗</a>
+      </p>
+    </aside>
+  </section>
+</div>
