@@ -56,7 +56,8 @@
   let nodeCounter = 0;
   root.each((d) => { d._id = nodeCounter++; });
 
-  // Collapse all beyond depth 2 by default to keep the initial view legible.
+  // Show root + depth 1 + depth 2 by default — gives a real sense of structure
+  // without becoming an unreadable hairball. (Total visible ≈ 306 nodes.)
   const collapseBeyond = (node, depth) => {
     if (node.depth >= depth && node.children) {
       node._children = node.children;
@@ -66,7 +67,7 @@
       collapseBeyond(c, depth)
     );
   };
-  collapseBeyond(root, 1);
+  collapseBeyond(root, 2);
 
   const gMain = svg.append('g');
   const gLinks = gMain.append('g').attr('class', 'links');
@@ -74,9 +75,9 @@
 
   const treeLayout = d3.tree();
 
-  const NODE_X_SPACING = 16;
-  const NODE_Y_SPACING = 110;
-  const NODE_RADIUS = (d) => (d.depth === 0 ? 12 : Math.max(3, 9 - d.depth));
+  const NODE_X_SPACING = 28;     // wider so depth-1 labels fit
+  const NODE_Y_SPACING = 130;    // taller depth bands so rotated labels don't cross
+  const NODE_RADIUS = (d) => (d.depth === 0 ? 14 : Math.max(3, 10 - d.depth));
 
   let selectedNode = null;
   let searchHits = new Set();
@@ -186,14 +187,21 @@
     });
 
     merged.select('text')
-      .attr('text-anchor', 'middle')
-      .attr('y', (d) => -NODE_RADIUS(d) - 3)
+      .attr('text-anchor', (d) => (d.depth === 0 ? 'middle' : 'start'))
+      .attr('y', 0)
+      .attr('x', (d) => (d.depth === 0 ? 0 : NODE_RADIUS(d) + 4))
+      .attr('dy', (d) => (d.depth === 0 ? -NODE_RADIUS(d) - 6 : '0.32em'))
+      .attr('transform', (d) => (d.depth === 0 ? null : 'rotate(-40)'))
       .text((d) => {
         if (d.depth === 0) return '';
-        if (d.depth === 1 || (selectedNode && selectedNode === d)) {
+        // Show labels for depths 1 and 2 (and the selected node) — these are
+        // the ones visible by default. Deeper levels only get a label when
+        // selected, to keep zoom-out views uncluttered.
+        if (d.depth <= 2 || (selectedNode && selectedNode === d)) {
           const a = (d.data.authors && d.data.authors[0]) || '';
           const last = a.split(' ').pop() || '';
-          return `${last}${d.data.year ? ' ' + d.data.year : ''}`;
+          const yr = d.data.year ? ' ' + d.data.year : '';
+          return `${last}${yr}`;
         }
         return '';
       });
@@ -228,42 +236,45 @@
       ? `<a href="${dat.openalexId.startsWith('http') ? dat.openalexId : 'https://openalex.org/' + dat.openalexId}" target="_blank" rel="noopener">View on OpenAlex ↗</a>`
       : '';
     const scholarLink = dat.scholarN != null
-      ? `<a href="https://scholar.google.com/scholar?cites=17763308536187984722" target="_blank" rel="noopener">Position #${dat.scholarN} in Scholar's depth-1 list ↗</a>`
+      ? `<a href="https://scholar.google.com/scholar?cites=17763308536187984722" target="_blank" rel="noopener">In Scholar’s depth-1 list (#${dat.scholarN}) ↗</a>`
       : '';
     const authors = (dat.authors || []).join(', ') || '(unknown)';
     const childCount = (d.children || d._children || []).length;
     const directCiterText = childCount === 0
-      ? 'No further citing papers found in this crawl (leaf).'
+      ? 'Leaf — no further citing papers in this crawl.'
       : `${childCount} direct citing paper${childCount === 1 ? '' : 's'} in this tree.`;
 
     detailBody.innerHTML = `
       <h2>${escapeHtml(dat.title)}</h2>
-      <div class="detail-row">
-        <span class="detail-label">Authors</span>
-        <span class="detail-value">${escapeHtml(authors)}</span>
+
+      <div class="detail-authors">
+        <span class="detail-authors-label">Authors</span>
+        ${escapeHtml(authors)}
       </div>
-      <div class="detail-row">
-        <span class="detail-label">Year</span>
-        <span class="detail-value">${dat.year || '—'}</span>
+
+      <div class="detail-meta">
+        <div class="detail-meta-item">
+          <span class="detail-meta-label">Year</span>
+          <span class="detail-meta-value">${dat.year || '—'}</span>
+        </div>
+        <div class="detail-meta-item">
+          <span class="detail-meta-label">Depth</span>
+          <span class="detail-meta-value">
+            <span class="depth-badge" style="background:${depthColor}">${dat.depth}</span>
+          </span>
+        </div>
+        <div class="detail-meta-item">
+          <span class="detail-meta-label">Own citations</span>
+          <span class="detail-meta-value">${dat.citedByCount != null ? dat.citedByCount : '—'}</span>
+        </div>
+        <div class="detail-meta-item">
+          <span class="detail-meta-label">Source</span>
+          <span class="detail-meta-value">${escapeHtml(dat.source || '—')}</span>
+        </div>
       </div>
-      <div class="detail-row">
-        <span class="detail-label">Depth</span>
-        <span class="detail-value">
-          <span class="depth-badge" style="background:${depthColor}">depth ${dat.depth}</span>
-        </span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Own citations</span>
-        <span class="detail-value">${dat.citedByCount != null ? dat.citedByCount : '—'}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">In this tree</span>
-        <span class="detail-value">${directCiterText}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Source</span>
-        <span class="detail-value mono">${escapeHtml(dat.source || '—')}</span>
-      </div>
+
+      <p class="detail-note">${directCiterText}</p>
+
       <div class="detail-links">
         ${oaLink}
         ${scholarLink}

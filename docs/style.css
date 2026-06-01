@@ -267,11 +267,20 @@ a:hover { text-decoration: underline; }
 
 .node text {
   fill: var(--text);
-  font-size: 9px;
+  font-size: 10px;
+  font-weight: 500;
   pointer-events: none;
   user-select: none;
+  paint-order: stroke;
+  stroke: rgba(11, 15, 20, 0.85);
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
 }
-.node.root text { font-size: 11px; font-weight: 600; }
+.node.root text {
+  font-size: 11px;
+  font-weight: 600;
+  stroke: none;
+}
 .node.collapsed circle { stroke-dasharray: 2 1.5; }
 
 .link {
@@ -287,10 +296,10 @@ a:hover { text-decoration: underline; }
 .detail-panel {
   position: fixed;
   top: 0; right: 0; bottom: 0;
-  width: min(420px, 92vw);
+  width: min(500px, 96vw);
   background: var(--bg-elev-2);
   border-left: 1px solid var(--border-strong);
-  padding: 28px 26px 24px;
+  padding: 32px 30px 28px;
   box-shadow: -20px 0 50px rgba(0, 0, 0, 0.55);
   overflow-y: auto;
   transform: translateX(105%);
@@ -305,51 +314,96 @@ a:hover { text-decoration: underline; }
   background: transparent;
   border: none;
   color: var(--text-dim);
-  font-size: 26px;
+  font-size: 28px;
   cursor: pointer;
   line-height: 1;
 }
 .detail-panel .close:hover { color: var(--text); }
 
 .detail-panel h2 {
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
   line-height: 1.4;
-  margin: 8px 0 12px;
-  padding-right: 18px;
+  margin: 0 32px 18px 0;
+  color: var(--text);
 }
-.detail-row {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin: 6px 0;
-  font-size: 13px;
+
+/* Authors gets its own dedicated block — wraps freely, no fixed-width column. */
+.detail-authors {
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  background: rgba(96, 165, 250, 0.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+  word-break: break-word;
 }
-.detail-label {
-  flex: 0 0 100px;
-  color: var(--text-dim);
-  font-size: 12px;
+.detail-authors-label {
+  display: block;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.2px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  font-weight: 600;
 }
-.detail-value { color: var(--text); }
-.detail-value.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+.detail-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 0 0 20px;
+}
+.detail-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.detail-meta-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.detail-meta-value {
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.detail-note {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
 .depth-badge {
   display: inline-block;
-  padding: 1px 8px;
+  padding: 2px 10px;
   border-radius: 99px;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--bg);
 }
 .detail-links {
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 18px;
+  padding-top: 18px;
   border-top: 1px solid var(--border-strong);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 13px;
+  gap: 10px;
+  font-size: 14px;
+}
+.detail-links a {
+  color: var(--accent);
+  font-weight: 500;
 }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
