@@ -49,7 +49,7 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 28px;
+  padding: 10px 28px;
   border-bottom: 1px solid var(--border);
   background: linear-gradient(180deg, var(--bg-elev), var(--bg));
 }
@@ -64,75 +64,75 @@ a:hover { text-decoration: underline; }
 .brand-text { font-size: 15px; }
 .header-links { display: flex; gap: 22px; font-size: 13px; }
 
-/* ── Hero ─────────────────────────────────────────────────────────────── */
+/* ── Hero (compact — leaves more room for the canvas) ─────────────────── */
 
 .hero {
-  padding: 36px 28px 22px;
+  padding: 14px 28px;
   border-bottom: 1px solid var(--border);
-  background: radial-gradient(1200px 360px at 50% -50%, rgba(96,165,250,0.07), transparent 60%);
+  background: radial-gradient(1200px 240px at 50% -50%, rgba(96,165,250,0.07), transparent 60%);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 32px;
-  align-items: end;
+  gap: 24px;
+  align-items: center;
 }
-.hero-text { max-width: 760px; }
-.eyebrow {
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  color: var(--text-dim);
-  margin: 0 0 6px;
-}
+.hero-text { max-width: 880px; }
+.eyebrow { display: none; }
 .hero h1 {
-  font-size: clamp(20px, 2.4vw, 28px);
-  margin: 0 0 8px;
+  font-size: clamp(16px, 1.7vw, 20px);
+  margin: 0 0 4px;
   line-height: 1.25;
   font-weight: 600;
 }
 .byline {
   font-family: 'JetBrains Mono', monospace;
   color: var(--text-dim);
-  font-size: 13px;
-  margin: 0 0 14px;
+  font-size: 12px;
+  margin: 0 0 6px;
 }
 .lead {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-dim);
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .lead em { color: var(--accent); font-style: normal; font-weight: 500; }
 
 .stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(110px, 1fr));
-  gap: 14px;
-  min-width: 280px;
+  display: flex;
+  gap: 8px;
 }
 .stat {
   background: var(--bg-elev-2);
   border: 1px solid var(--border-strong);
-  border-radius: 8px;
-  padding: 12px 14px;
+  border-radius: 6px;
+  padding: 6px 10px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 1px;
+  min-width: 64px;
+  text-align: center;
 }
 .stat-value {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
 }
 .stat-label {
-  font-size: 11px;
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   color: var(--text-dim);
 }
 
-@media (max-width: 720px) {
-  .hero { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding: 12px 18px; }
+  .stats { justify-content: flex-start; flex-wrap: wrap; }
+  .lead { -webkit-line-clamp: 3; }
 }
 
 /* ── Controls ─────────────────────────────────────────────────────────── */
@@ -141,8 +141,8 @@ a:hover { text-decoration: underline; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
-  padding: 12px 28px;
+  gap: 12px;
+  padding: 8px 28px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-elev);
 }
@@ -187,6 +187,7 @@ a:hover { text-decoration: underline; }
 .canvas-wrap {
   position: relative;
   overflow: hidden;
+  min-height: 70vh;
   background:
     radial-gradient(circle at 0% 0%, rgba(96,165,250,0.04), transparent 50%),
     radial-gradient(circle at 100% 100%, rgba(168,85,247,0.04), transparent 50%),
@@ -354,10 +355,11 @@ a:hover { text-decoration: underline; }
 /* ── Footer ───────────────────────────────────────────────────────────── */
 
 .footer {
-  padding: 14px 28px;
+  padding: 9px 28px;
   border-top: 1px solid var(--border);
   color: var(--text-mute);
-  font-size: 12px;
+  font-size: 11.5px;
   background: var(--bg-elev);
 }
+.footer p { margin: 0; }
 .footer a { color: var(--text-dim); }
