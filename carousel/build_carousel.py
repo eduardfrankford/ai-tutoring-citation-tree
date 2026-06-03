@@ -242,13 +242,13 @@ def slide1(blob: dict) -> plt.Figure:
     )
     fig.text(
         0.06, 0.09,
-        "papers cite one 2024 AI-tutoring paper.",
+        "papers built on the first paper of my PhD.",
         fontsize=22, color=TEXT, ha="left", va="bottom",
         fontweight="medium", zorder=40,
     )
     fig.text(
         0.06, 0.055,
-        "Almost none of them existed when it was published.",
+        "I followed every citation. Here's what I found.",
         fontsize=20, color=MUTED, ha="left", va="bottom",
         fontweight="medium", style="italic", zorder=40,
     )
@@ -282,32 +282,25 @@ def slide2(blob: dict) -> plt.Figure:
         fontweight="bold", family="Inter Display",
     )
 
-    # Quote-shareable line pulled UP under the headline so it screenshots together.
+    # Plain-English subhead — no more "field-velocity sensor" jargon.
     fig.text(
-        0.5, 0.575,
-        "A forward citation tree of a recent paper",
-        fontsize=18, color=BLUE, ha="center", va="center", style="italic",
+        0.5, 0.520,
+        "of these 977 papers were written",
+        fontsize=28, color=TEXT, ha="center", va="center",
         fontweight="medium",
     )
     fig.text(
-        0.5, 0.545,
-        "is a real-time field-velocity sensor.",
-        fontsize=18, color=BLUE, ha="center", va="center", style="italic",
+        0.5, 0.482,
+        "AFTER my paper, in just 2 years.",
+        fontsize=28, color=TEXT, ha="center", va="center",
         fontweight="medium",
     )
 
-    # Subhead — clearer reframe under the quotable line
     fig.text(
-        0.5, 0.470,
-        "of these papers did not exist",
-        fontsize=26, color=TEXT, ha="center", va="center",
-        fontweight="medium",
-    )
-    fig.text(
-        0.5, 0.434,
-        "when the seed paper was published.",
-        fontsize=26, color=TEXT, ha="center", va="center",
-        fontweight="medium",
+        0.5, 0.420,
+        "The field is moving fast.",
+        fontsize=18, color=BLUE, ha="center", va="center",
+        fontweight="medium", style="italic",
     )
 
     # Year-distribution chart with sequential blue ramp and YTD marker.
@@ -328,28 +321,14 @@ def slide2(blob: dict) -> plt.Figure:
             bar.get_height() + 12, str(c),
             ha="center", va="bottom", color=TEXT, fontsize=18, fontweight="bold",
         )
-    # YTD label inside the 2026 bar
-    chart_ax.text(
-        bars[2].get_x() + bars[2].get_width() / 2,
-        bars[2].get_height() / 2, "YTD",
-        ha="center", va="center", color="#E0F2FE",
-        fontsize=14, fontweight="bold", alpha=0.85,
-    )
     chart_ax.set_ylim(0, max(counts) * 1.25)
     chart_ax.tick_params(axis="x", colors=MUTED, labelsize=14, length=0)
     chart_ax.tick_params(axis="y", left=False, labelleft=False)
     for spine in chart_ax.spines.values():
         spine.set_visible(False)
     chart_ax.set_title(
-        "Publication year of all 977 papers in the tree",
-        color=MUTED, fontsize=12, pad=10, loc="left",
-    )
-
-    # Honesty footnote — closes both the arithmetic gap (17 unresolved) and the partial-year gap.
-    fig.text(
-        0.5, 0.073,
-        "Crawled June 2026 · 17 papers without a resolved publication year · 2026 bar is year-to-date",
-        fontsize=10, color=MUTED, ha="center", va="bottom", style="italic",
+        "When were the 977 papers written?",
+        color=MUTED, fontsize=13, pad=10, loc="left",
     )
 
     # Footer
@@ -375,9 +354,8 @@ def slide3(blob: dict) -> plt.Figure:
         0.5, 0.92, "From 1 paper to 977.",
         fontsize=42, color=TEXT, ha="center", va="center", fontweight="bold",
     )
-    # Forward-pointing swipe-driver subtitle (was: "Eight generations of citing work.")
     fig.text(
-        0.5, 0.872, "But most of the mass lives in one specific layer  →",
+        0.5, 0.872, "Each layer = one generation away from my paper.",
         fontsize=21, color=MUTED, ha="center", va="center",
     )
 
@@ -435,10 +413,8 @@ def slide3(blob: dict) -> plt.Figure:
         biggest_id = max(d1_subtrees, key=d1_subtrees.get)
         biggest_size = d1_subtrees[biggest_id]
         bx, by = pos[biggest_id]
-        # Point at the top of the subtree (d1 row) where there's empty sky to the
-        # left, so the annotation text doesn't collide with the dense d2-d4 mass.
         tree_ax.annotate(
-            f"Iris (Bassner et al.):\n{biggest_size}-paper sub-tree",
+            f"Iris — my follow-up project\n({biggest_size} papers branch off it)",
             xy=(bx + 0.5, by - 0.15),
             xytext=(bx - 120, by + 0.30),
             fontsize=12, color=CORAL, fontweight="medium",
@@ -477,12 +453,12 @@ def slide4(blob: dict) -> plt.Figure:
     fig, ax = _new_slide()
 
     fig.text(
-        0.5, 0.93, "The wavefront",
-        fontsize=46, color=TEXT, ha="center", va="center", fontweight="bold",
+        0.5, 0.93, "How many papers per generation?",
+        fontsize=36, color=TEXT, ha="center", va="center", fontweight="bold",
     )
     fig.text(
         0.5, 0.88,
-        "Papers per generation. Depth 3 is where the wave breaks.",
+        "The 3rd generation is the biggest — 244 papers.",
         fontsize=18, color=MUTED, ha="center", va="center",
     )
 
@@ -523,7 +499,7 @@ def slide4(blob: dict) -> plt.Figure:
         )
 
     chart_ax.annotate(
-        "crest of the wave",
+        "biggest generation",
         xy=(crest_d, per_depth[crest_d]),
         xytext=(crest_d + 1.2, per_depth[crest_d] + 30),
         fontsize=15, color=TEXT, fontweight="medium",
@@ -545,25 +521,8 @@ def slide4(blob: dict) -> plt.Figure:
         labelcolor=TEXT, fontsize=12, framealpha=0.9,
     )
 
-    # "So what" forward-looking takeaway.
-    fig.text(
-        0.5, 0.155,
-        "Those depth-3 papers are spawning the next wave right now.",
-        fontsize=15, color=CORAL, ha="center", va="center",
-        fontweight="medium", style="italic",
-    )
-
-    # Bottom summary with honest leaves disclosure.
-    fig.text(
-        0.5, 0.115,
-        "977 papers · 711 leaves · 1062 citation edges",
-        fontsize=13, color=MUTED, ha="center", va="center",
-    )
-    fig.text(
-        0.5, 0.087,
-        "Leaves = no descendants in our crawl (yet).",
-        fontsize=11, color=MUTED, ha="center", va="center", style="italic",
-    )
+    # (Bottom-of-slide kept clean — the bars + per-bar numbers tell the story
+    # and Slide 3 already taught what "one generation away" means.)
 
     _footer(ax, 4)
     return fig
@@ -586,13 +545,12 @@ def slide5(blob: dict) -> plt.Figure:
 
     fig, ax = _new_slide()
     fig.text(
-        0.5, 0.93, "Where the citations concentrated.",
-        fontsize=38, color=TEXT, ha="center", va="center", fontweight="bold",
+        0.5, 0.93, "The 5 most-cited papers building on mine.",
+        fontsize=32, color=TEXT, ha="center", va="center", fontweight="bold",
     )
-    # Insight, not leaderboard
     fig.text(
         0.5, 0.882,
-        f"5 papers (of 977) account for {concentration_pct}% of the tree's citation mass.",
+        "These are the ones really moving the field forward.",
         fontsize=17, color=BLUE, ha="center", va="center", fontweight="medium",
     )
 
@@ -678,21 +636,20 @@ def slide5(blob: dict) -> plt.Figure:
 def slide6(blob: dict) -> plt.Figure:
     fig, ax = _new_slide()
 
-    # Punchline callback above the headline.
     fig.text(
         0.5, 0.882,
-        "977 papers. 96% published after the seed.",
+        "Pretty cool to see the work had some real impact :)",
         fontsize=15, color=MUTED, ha="center", va="center",
         fontweight="medium",
     )
 
     # Headline
     fig.text(
-        0.5, 0.82, "Explore every paper",
+        0.5, 0.82, "Explore the full tree",
         fontsize=44, color=TEXT, ha="center", va="center", fontweight="bold",
     )
     fig.text(
-        0.5, 0.775, "in the tree.",
+        0.5, 0.775, "yourself.",
         fontsize=44, color=TEXT, ha="center", va="center", fontweight="bold",
     )
 

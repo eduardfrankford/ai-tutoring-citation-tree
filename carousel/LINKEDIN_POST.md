@@ -1,78 +1,91 @@
 # LinkedIn carousel — post copy
 
-Three drafts at different lengths. Pick one.
+Three drafts at different lengths, all in your voice (based on how you actually told me the story).
 
-## Use this checklist before posting
+## Pre-publish checklist
 
-- [ ] Upload `linkedin_carousel.pdf` as a Document post (not as individual images)
-- [ ] Post text in the body (do NOT put the URL in the body — LinkedIn deprioritizes posts with external links)
-- [ ] **First comment immediately after publishing**: paste the URL `https://eduardfrankford.github.io/ai-tutoring-citation-tree/`. This is the standard LinkedIn-algorithm move.
-- [ ] Add 3–5 hashtags at the end of the post body: `#AIinEducation #SoftwareEngineering #CitationAnalysis #AcademicResearch #DataVisualization`
+- [ ] Upload `linkedin_carousel.pdf` as a **Document post** (not as individual images)
+- [ ] Paste the post text in the body (do NOT put the URL in the body — LinkedIn deprioritizes posts with external links)
+- [ ] **First comment immediately after publishing**: paste `https://eduardfrankford.github.io/ai-tutoring-citation-tree/`. This is the standard LinkedIn-algorithm move so the link is tappable without the post being penalized.
+- [ ] Add 3–5 hashtags at the end: `#AIinEducation #PhD #SoftwareEngineering #AITutoring #AcademicResearch`
 - [ ] Reply to comments in the first hour — the algorithm watches early engagement
 
 ---
 
-## Draft A — short and punchy (recommended for cold reach)
+## Draft A — short and personal (recommended)
 
 ```
-96% of the papers that cite my 2024 ICSE-SEET paper didn't exist when I published it.
+My first PhD paper just hit 100 citations on Google Scholar 🎉
 
-I crawled the full forward citation tree, 8 generations deep — 977 papers, 1062 edges. None of which I'd have found through the paper's own "cited by" list.
+I was curious where the impact actually went, so I followed those 100 papers
+to see who cites them. Then who cites those. And so on, until I hit the leaves.
 
-A forward citation tree of a recent paper is basically a real-time field-velocity sensor.
+977 papers turned out to be built on mine — 8 generations deep.
 
-Tappable link in the first comment 👇
+Really cool to see the work had some real impact in the AI tutoring space :)
 
-#AIinEducation #SoftwareEngineering #CitationAnalysis
+Tappable link to the interactive tree in the first comment 👇
+
+#AIinEducation #PhD #SoftwareEngineering
 ```
 
-## Draft B — story angle (best for academic + EdTech network)
+## Draft B — medium, with the build story
 
 ```
-In 2024 my ICSE-SEET paper on AI tutoring had zero citations.
+My first PhD paper just hit 100 citations on Google Scholar 🎉
 
-Today: 100 direct citers on Google Scholar.
+For fun I wanted to see the actual ripple effect — not just who cites my paper,
+but who cites THOSE papers, and so on, all the way down.
 
-So I asked the obvious follow-up: who cites the citers? Then I built a tool to crawl the full forward citation tree, all the way down to the leaves.
+So I built a little tool to crawl the citation graph and visualize it.
 
-The result: 977 papers, 8 generations deep, 711 of which are leaves (papers that have no citers themselves yet).
+Turns out 977 papers are built on mine — 8 generations deep.
 
-The most surprising stat: 96% of those 977 papers were published AFTER I published mine. The tree is almost entirely 2025 and 2026 work. A forward citation tree of a recent paper isn't really a "citation graph" — it's a real-time field-velocity sensor.
+The first generation (the 100 direct citers) is just the start. Generation 3
+is actually the biggest with 244 papers. So my paper's "reach" is mostly
+indirect — people building on people building on the work, not directly on it.
 
-Interactive viewer (zoom, search, click any paper for full details) — link in the first comment 👇
+Really cool to see the research had some real impact in the AI tutoring space :)
 
-Built with the OpenAlex API, D3 v7, and GitHub Pages. Open source.
+Interactive tree where you can zoom into any of the 977 papers — link in the
+first comment 👇
 
-#AIinEducation #SoftwareEngineering #CitationAnalysis #AcademicResearch
+#AIinEducation #PhD #SoftwareEngineering #DataVisualization
 ```
 
-## Draft C — technical angle (best for engineers / data folks)
+## Draft C — with the methodology
 
 ```
-What does the full forward citation tree of a single paper look like, all the way to the leaves?
+My first PhD paper just hit 100 citations on Google Scholar 🎉
 
-I crawled mine: 977 papers, 1062 edges, max depth 8 generations, 711 leaves. 27% of the entire tree's citation mass concentrates in just 5 papers at depth 1.
+I wanted to see the actual downstream impact, so I built a small tool that
+follows citations recursively — papers cite my paper, then I follow each of
+those to see who cites them, then again, all the way to the leaves.
 
-But the headline finding: 96% of these 977 papers were published AFTER the seed paper. A forward citation tree of a recent paper is a real-time field-velocity sensor.
+The result: 977 papers, 8 generations deep, with depth 3 being the biggest
+generation (244 papers).
 
-Stack:
-→ Google Scholar gave the ground-truth 100 depth-1 citers
-→ OpenAlex (free, well-indexed citation graph) handled the recursive BFS — finished in 27 seconds
-→ D3 v7 for the visualization, GitHub Pages for hosting
+What surprised me: 96% of those 977 papers were written AFTER mine, in
+just 2 years. AI in education is moving really fast.
 
-Interactive zoomable tree — link in the first comment 👇
+Really cool to see the work had some real impact in the AI tutoring scene :)
 
-Open source on GitHub — comment with a DOI and I'll run yours.
+Interactive zoomable tree (search, click any paper for full details) — link
+in the first comment 👇
 
-#DataVisualization #CitationAnalysis #OpenScience #AIinEducation
+Built with Google Scholar (for the depth-1 ground truth), the OpenAlex API
+(for the recursive crawl), and D3 for the viz. Open source.
+
+#AIinEducation #PhD #SoftwareEngineering #DataVisualization #AcademicResearch
 ```
 
 ---
 
-## Why these specific moves
+## What changed from the previous version
 
-- **96% headline first** — the adversarial review flagged this as the only screenshot-bait stat in the deck. Don't bury it.
-- **Link in first comment** — PDF carousels don't surface external URLs as clickable. LinkedIn also suppresses posts with external links in the body. Putting the URL in the first comment is the standard workaround.
-- **No "humblebrag" framing** — "in 2024 my paper had zero citations → today X" works because it's about the field's velocity, not the author's vanity. Avoid "my impact" / "look how far my paper traveled".
-- **"comment with a DOI and I'll run yours"** (Draft C) — turns the post into a service. Drives saves and replies, which the algorithm reads as quality engagement.
-- **Hashtags at end, 3–5 max** — too many tanks reach; too few misses topical feeds.
+The earlier drafts I gave you leaned on strategist framing — "field-velocity
+sensor", "screenshot-worthy stats", calling 977 a "vanity number to reframe".
+That's not how you actually talk. These drafts use your own phrasing:
+"first PhD paper", "really cool to see", "AI tutoring space", the smile emoji
+at the end. Pick whichever length feels right — A for cold reach, B for
+your network, C for the data/methods crowd.
