@@ -176,18 +176,111 @@ def _build_children_map(blob: dict) -> tuple[dict[str, list[str]], dict[str, dic
 # ===========================================================================
 
 def slide1(blob: dict) -> plt.Figure:
-    """The thumbnail. Tree fills the canvas, "977" overlaid bottom-left."""
+    """Celebration: just '100 citations 🎉' on the first paper of my PhD. No tree."""
+    fig, ax = _new_slide()
+
+    # Soft coral glow behind the number to feel celebratory without confetti.
+    for sz, alpha in [(80000, 0.05), (40000, 0.08), (18000, 0.10)]:
+        ax.scatter(
+            [0.5], [0.595], s=sz, c=CORAL, alpha=alpha,
+            edgecolors="none", transform=fig.transFigure, zorder=1,
+        )
+
+    # Small eyebrow — replaces the emoji we couldn't render in matplotlib's Inter.
+    fig.text(
+        0.5, 0.86, "M I L E S T O N E",
+        fontsize=14, color=CORAL, ha="center", va="center",
+        fontweight="bold", zorder=10,
+    )
+
+    # The hero number.
+    fig.text(
+        0.5, 0.62, "100",
+        fontsize=360, color=CORAL, ha="center", va="center",
+        fontweight="bold", family="Inter Display", zorder=10,
+    )
+    fig.text(
+        0.5, 0.42, "citations",
+        fontsize=42, color=TEXT, ha="center", va="center",
+        fontweight="medium", zorder=10,
+    )
+    fig.text(
+        0.5, 0.375, "on the first paper of my PhD.",
+        fontsize=24, color=MUTED, ha="center", va="center",
+        fontweight="medium", zorder=10,
+    )
+
+    # Divider
+    ax.plot([0.22, 0.78], [0.30, 0.30], color=DIM, lw=0.8,
+            transform=fig.transFigure, zorder=2)
+
+    # Seed paper card
+    fig.text(
+        0.5, 0.265,
+        "“AI-Tutoring in Software Engineering Education”",
+        fontsize=17, color=TEXT, ha="center", va="center",
+        fontweight="medium", style="italic", zorder=10,
+    )
+    fig.text(
+        0.5, 0.232,
+        "Frankford, Sauerwein, Bassner, Krusche, Breu",
+        fontsize=13, color=MUTED, ha="center", va="center", zorder=10,
+    )
+    fig.text(
+        0.5, 0.207,
+        "ICSE-SEET 2024 · Google Scholar, June 2026",
+        fontsize=12, color=MUTED, ha="center", va="center", zorder=10,
+    )
+
+    # Curiosity hook
+    fig.text(
+        0.5, 0.12,
+        "Time to see how far the impact actually went…",
+        fontsize=17, color=BLUE, ha="center", va="center",
+        fontweight="medium", style="italic", zorder=10,
+    )
+
+    # Swipe prompt
+    fig.text(
+        0.5, 0.07, "swipe  →",
+        fontsize=15, color=MUTED, ha="center", va="center", zorder=10,
+    )
+    fig.text(0.94, 0.025, "1 / 6", fontsize=11, color=MUTED,
+             ha="right", va="bottom", zorder=10)
+    return fig
+
+
+# ===========================================================================
+# Slide 2 — The reframe: 96%
+# ===========================================================================
+
+def slide2(blob: dict) -> plt.Figure:
+    """The reveal. Full radial tree of all 977 papers + '977' overlay."""
     flat = blob["_flat"]
     fig, ax = _new_slide()
 
-    # Tree axis fills 100% — the tree IS the slide.
-    tree_ax = fig.add_axes([0.0, 0.0, 1.0, 1.0])
+    # Top headline — sets up the surprise.
+    fig.text(
+        0.5, 0.94,
+        "So I followed every citation.",
+        fontsize=26, color=TEXT, ha="center", va="center",
+        fontweight="medium",
+    )
+    fig.text(
+        0.5, 0.91,
+        "Then their citations. Then theirs.",
+        fontsize=18, color=MUTED, ha="center", va="center",
+        style="italic",
+    )
+
+    # Tree axis fills the middle.
+    tree_ax = fig.add_axes([0.04, 0.13, 0.92, 0.75])
     tree_ax.set_facecolor(NAVY)
     tree_ax.axis("equal")
     tree_ax.axis("off")
 
     pos = _radial_layout(flat)
-    children_map, by_id = _build_children_map(blob)
+    children_map, _ = _build_children_map(blob)
     depth_of = {n["id"]: n["depth"] for n in flat}
 
     # Edges
@@ -201,7 +294,8 @@ def slide1(blob: dict) -> plt.Figure:
             x2, y2 = pos[kid]
             d_mid = (depth_of[nid] + depth_of[kid]) // 2
             c = DEPTH_COLOR[min(d_mid, len(DEPTH_COLOR) - 1)]
-            tree_ax.plot([x1, x2], [y1, y2], color=c, alpha=0.32, linewidth=0.55, zorder=1)
+            tree_ax.plot([x1, x2], [y1, y2], color=c, alpha=0.35,
+                         linewidth=0.55, zorder=1)
 
     # Nodes
     for n in flat:
@@ -209,132 +303,43 @@ def slide1(blob: dict) -> plt.Figure:
         d = n["depth"]
         if d == 0:
             for i, sz in enumerate([6000, 3500, 1600]):
-                tree_ax.scatter([x], [y], s=sz, c=CORAL, alpha=0.10 - 0.025*i, edgecolors="none", zorder=15+i)
-            tree_ax.scatter([x], [y], s=1100, c=CORAL, edgecolors="white", linewidths=2, zorder=20)
+                tree_ax.scatter([x], [y], s=sz, c=CORAL,
+                                alpha=0.10 - 0.025*i, edgecolors="none", zorder=15+i)
+            tree_ax.scatter([x], [y], s=900, c=CORAL,
+                            edgecolors="white", linewidths=2, zorder=20)
         else:
-            sz = max(4, 32 - d * 3)
-            tree_ax.scatter([x], [y], s=sz, c=DEPTH_COLOR[d], edgecolors="none", zorder=2)
+            sz = max(4, 30 - d * 3)
+            tree_ax.scatter([x], [y], s=sz, c=DEPTH_COLOR[d],
+                            edgecolors="none", zorder=2)
 
     tree_ax.set_xlim(-9, 9)
-    tree_ax.set_ylim(-10.3, 9.0)
+    tree_ax.set_ylim(-9, 9)
 
-    # Bottom vignette so the overlay text reads cleanly on top of the tree.
-    grad_ax = fig.add_axes([0.0, 0.0, 1.0, 0.32], zorder=30)
-    grad_ax.set_facecolor("none")
-    grad_ax.set_xlim(0, 1)
-    grad_ax.set_ylim(0, 1)
-    grad_ax.axis("off")
-    cmap = plt.matplotlib.colors.LinearSegmentedColormap.from_list(
-        "vignette",
-        [(11/255, 20/255, 55/255, 0.0), (11/255, 20/255, 55/255, 0.96)],
-    )
-    grad_ax.imshow(
-        np.linspace(0.0, 1.0, 256).reshape(256, 1),
-        cmap=cmap, aspect="auto",
-        extent=(0, 1, 0, 1), origin="upper",
-    )
-
-    # Overlay: "977" big, bottom-left.
+    # The "977" overlay — centered on the tree itself.
     fig.text(
-        0.06, 0.135, "977",
-        fontsize=185, color=CORAL, ha="left", va="bottom",
+        0.5, 0.515, "977",
+        fontsize=170, color=CORAL, ha="center", va="center",
         fontweight="bold", family="Inter Display", zorder=40,
-    )
-    fig.text(
-        0.06, 0.09,
-        "papers built on the first paper of my PhD.",
-        fontsize=22, color=TEXT, ha="left", va="bottom",
-        fontweight="medium", zorder=40,
-    )
-    fig.text(
-        0.06, 0.055,
-        "I followed every citation. Here's what I found.",
-        fontsize=20, color=MUTED, ha="left", va="bottom",
-        fontweight="medium", style="italic", zorder=40,
+        bbox=dict(boxstyle="round,pad=0.18", facecolor=NAVY,
+                  edgecolor="none", alpha=0.78),
     )
 
-    # Swipe prompt
+    # Bottom caption
     fig.text(
-        0.94, 0.07, "swipe →",
-        fontsize=15, color=BLUE, ha="right", va="bottom", zorder=40,
-    )
-
-    # Subtle page indicator only (no @handle on hero — keep it clean)
-    fig.text(
-        0.94, 0.025, "1 / 6",
-        fontsize=11, color=MUTED, ha="right", va="bottom", zorder=40,
-    )
-    return fig
-
-
-# ===========================================================================
-# Slide 2 — The reframe: 96%
-# ===========================================================================
-
-def slide2(blob: dict) -> plt.Figure:
-    flat = blob["_flat"]
-    fig, ax = _new_slide()
-
-    # 96% headline — moved slightly higher to clear the chart below.
-    fig.text(
-        0.5, 0.78, "96%",
-        fontsize=280, color=CORAL, ha="center", va="center",
-        fontweight="bold", family="Inter Display",
-    )
-
-    # Plain-English subhead — no more "field-velocity sensor" jargon.
-    fig.text(
-        0.5, 0.520,
-        "of these 977 papers were written",
-        fontsize=28, color=TEXT, ha="center", va="center",
+        0.5, 0.085,
+        "977 papers turned out to be built on mine.",
+        fontsize=22, color=TEXT, ha="center", va="center",
         fontweight="medium",
     )
     fig.text(
-        0.5, 0.482,
-        "AFTER my paper, in just 2 years.",
-        fontsize=28, color=TEXT, ha="center", va="center",
-        fontweight="medium",
-    )
-
-    fig.text(
-        0.5, 0.420,
-        "The field is moving fast.",
-        fontsize=18, color=BLUE, ha="center", va="center",
+        0.5, 0.055,
+        "8 generations deep.",
+        fontsize=20, color=BLUE, ha="center", va="center",
         fontweight="medium", style="italic",
     )
 
-    # Year-distribution chart with sequential blue ramp and YTD marker.
-    yc = Counter(n.get("year") for n in flat if isinstance(n.get("year"), int) and 2023 <= n.get("year") <= 2026)
-    years = [2024, 2025, 2026]
-    counts = [yc.get(y, 0) for y in years]
-
-    chart_ax = fig.add_axes([0.18, 0.135, 0.64, 0.22])
-    chart_ax.set_facecolor(NAVY)
-    bar_colors = ["#38BDF8", "#0EA5E9", "#0369A1"]  # sequential blue ramp
-    bars = chart_ax.bar(
-        [str(y) for y in years], counts,
-        color=bar_colors, width=0.55, edgecolor="none",
-    )
-    for bar, c in zip(bars, counts):
-        chart_ax.text(
-            bar.get_x() + bar.get_width() / 2,
-            bar.get_height() + 12, str(c),
-            ha="center", va="bottom", color=TEXT, fontsize=18, fontweight="bold",
-        )
-    chart_ax.set_ylim(0, max(counts) * 1.25)
-    chart_ax.tick_params(axis="x", colors=MUTED, labelsize=14, length=0)
-    chart_ax.tick_params(axis="y", left=False, labelleft=False)
-    for spine in chart_ax.spines.values():
-        spine.set_visible(False)
-    chart_ax.set_title(
-        "When were the 977 papers written?",
-        color=MUTED, fontsize=13, pad=10, loc="left",
-    )
-
-    # Footer
-    fig.text(0.5, 0.025, "1 paper → 977 in 24 months",
-             fontsize=11, color=MUTED, ha="center", va="bottom")
-    fig.text(0.96, 0.025, "2 / 6", fontsize=11, color=MUTED, ha="right", va="bottom")
+    fig.text(0.94, 0.025, "2 / 6", fontsize=11, color=MUTED,
+             ha="right", va="bottom")
     return fig
 
 
