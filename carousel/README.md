@@ -1,6 +1,6 @@
-# LinkedIn carousel — "977 papers cite one 2024 paper"
+# LinkedIn carousel — "100 → 977"
 
-A 6-slide PDF carousel sized for LinkedIn (1080×1350, 4:5 portrait).
+A 4-slide PDF carousel sized for LinkedIn (1080×1350, 4:5 portrait).
 
 ## Contents
 
@@ -31,9 +31,7 @@ backend/.venv/bin/python /tmp/build_carousel.py
 
 ## Story arc
 
-1. **Hero** — radial tree of 977 papers with "977" overlay (the thumbnail; works at 200×250)
-2. **The reframe** — "96% of these papers didn't exist when I published the seed paper" + year-distribution chart
-3. **The tree shape** — top-down tidy tree showing 8 depth bands and the biggest sub-tree (Bassner et al.'s Iris)
-4. **The wavefront** — per-depth bar chart, depth 3 highlighted as the "crest" of citation velocity
-5. **Where the citations concentrated** — top 5 cited descendants with concentration stat (27% of citation mass)
-6. **CTA** — link to the interactive site (via first comment, since PDF URLs aren't tappable on LinkedIn)
+1. **Milestone** — `MILESTONE / 100 citations on the first paper of my PhD.` Seed paper card. `Time to see how far the impact actually went…`
+2. **Discovery** — `So I followed every citation. Then their citations. Then theirs.` Full radial tree with "977" overlaid at the centre. `977 papers turned out to be built on mine. 8 generations deep.`
+3. **The tree shape** — top-down tidy tree (`From 1 paper to 977.`) with the Iris follow-up annotation
+4. **The takeaway** — `Pretty cool to see the work had some real impact in the AI tutoring space :)` + tappable-link-in-first-comment affordance + minimal seed paper attribution

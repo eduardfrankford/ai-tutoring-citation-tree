@@ -82,7 +82,7 @@ def _slide_bg(ax) -> None:
     ax.axis("off")
 
 
-def _footer(ax, slide_n: int, total: int = 6) -> None:
+def _footer(ax, slide_n: int, total: int = 4) -> None:
     ax.text(
         0.04, 0.025, "@eduardfrankford",
         fontsize=11, color=MUTED, ha="left", va="bottom",
@@ -245,7 +245,7 @@ def slide1(blob: dict) -> plt.Figure:
         0.5, 0.07, "swipe  →",
         fontsize=15, color=MUTED, ha="center", va="center", zorder=10,
     )
-    fig.text(0.94, 0.025, "1 / 6", fontsize=11, color=MUTED,
+    fig.text(0.94, 0.025, "1 / 4", fontsize=11, color=MUTED,
              ha="right", va="bottom", zorder=10)
     return fig
 
@@ -338,7 +338,7 @@ def slide2(blob: dict) -> plt.Figure:
         fontweight="medium", style="italic",
     )
 
-    fig.text(0.94, 0.025, "2 / 6", fontsize=11, color=MUTED,
+    fig.text(0.94, 0.025, "2 / 4", fontsize=11, color=MUTED,
              ha="right", va="bottom")
     return fig
 
@@ -638,103 +638,113 @@ def slide5(blob: dict) -> plt.Figure:
 # Slide 6 — Call to action
 # ===========================================================================
 
-def slide6(blob: dict) -> plt.Figure:
+def slide4_end(blob: dict) -> plt.Figure:
+    """The closing slide. Warm reflection + one clear call-to-action."""
     fig, ax = _new_slide()
 
+    # Eyebrow — mirrors the "MILESTONE" eyebrow on slide 1 to bookend the deck.
     fig.text(
-        0.5, 0.882,
-        "Pretty cool to see the work had some real impact :)",
-        fontsize=15, color=MUTED, ha="center", va="center",
+        0.5, 0.88, "T H E   T A K E A W A Y",
+        fontsize=14, color=CORAL, ha="center", va="center",
+        fontweight="bold",
+    )
+
+    # Big warm reflection — the real ending of the story.
+    fig.text(
+        0.5, 0.79,
+        "Pretty cool to see the work",
+        fontsize=34, color=TEXT, ha="center", va="center",
+        fontweight="bold",
+    )
+    fig.text(
+        0.5, 0.747,
+        "had some real impact",
+        fontsize=34, color=TEXT, ha="center", va="center",
+        fontweight="bold",
+    )
+    fig.text(
+        0.5, 0.702,
+        "in the AI tutoring space  :)",
+        fontsize=34, color=CORAL, ha="center", va="center",
+        fontweight="bold",
+    )
+
+    # Curiosity hook — invites the reader to engage with the tool.
+    fig.text(
+        0.5, 0.585,
+        "Want to see the full tree?",
+        fontsize=22, color=TEXT, ha="center", va="center",
         fontweight="medium",
     )
-
-    # Headline
     fig.text(
-        0.5, 0.82, "Explore the full tree",
-        fontsize=44, color=TEXT, ha="center", va="center", fontweight="bold",
-    )
-    fig.text(
-        0.5, 0.775, "yourself.",
-        fontsize=44, color=TEXT, ha="center", va="center", fontweight="bold",
+        0.5, 0.547,
+        "Every paper is in there, zoomable and searchable.",
+        fontsize=17, color=MUTED, ha="center", va="center",
+        style="italic",
     )
 
-    # "Link in first comment" affordance — PDF URLs are not tappable on LinkedIn.
+    # "Link in first comment" affordance — PDF URLs aren't tappable on LinkedIn.
     fig.text(
-        0.5, 0.69, "↓  Tappable link in the first comment",
+        0.5, 0.465, "↓  Tappable link in the first comment",
         fontsize=16, color=CORAL, ha="center", va="center", fontweight="bold",
     )
 
-    # Off-white pill with coral arrow — color discipline preserved.
+    # Off-white URL pill with coral arrow — colour discipline preserved.
     btn = mpatches.FancyBboxPatch(
-        (0.08, 0.595), 0.84, 0.075,
+        (0.08, 0.380), 0.84, 0.070,
         boxstyle="round,pad=0.004,rounding_size=0.022",
         facecolor=OFFWHITE, edgecolor="none",
         transform=fig.transFigure, zorder=2,
     )
     fig.patches.append(btn)
     fig.text(
-        0.49, 0.6325,
+        0.49, 0.415,
         "eduardfrankford.github.io/ai-tutoring-citation-tree",
-        fontsize=18, color=NAVY_DEEP, ha="center", va="center",
+        fontsize=17, color=NAVY_DEEP, ha="center", va="center",
         fontweight="bold", family="Inter",
     )
-    # Coral arrow at the end of the pill
     fig.text(
-        0.88, 0.6325, "→",
-        fontsize=24, color=CORAL, ha="center", va="center",
-        fontweight="bold",
+        0.88, 0.415, "→",
+        fontsize=22, color=CORAL, ha="center", va="center", fontweight="bold",
     )
 
-    # Feature bullets — only the two real user benefits; tech stack moved below.
-    bullets = [
-        "→  Zoom, pan, click any paper for details",
-        "→  Search across all 977 titles and authors",
-    ]
-    for i, b in enumerate(bullets):
-        fig.text(
-            0.5, 0.50 - i * 0.045, b,
-            fontsize=15, color=TEXT, ha="center", va="center", fontweight="medium",
-        )
-
-    # Divider
-    ax.plot([0.18, 0.82], [0.36, 0.36], color=DIM, lw=0.8, transform=fig.transFigure, zorder=2)
-
-    # Seed paper details
+    # Engagement hook — drives comments, which boosts LinkedIn reach.
     fig.text(
-        0.5, 0.328, "SEED PAPER",
-        fontsize=11, color=MUTED, ha="center", va="center",
-        fontweight="bold",
-    )
-    fig.text(
-        0.5, 0.290,
-        "“AI-Tutoring in Software Engineering Education”",
-        fontsize=17, color=TEXT, ha="center", va="center", fontweight="medium",
-        style="italic",
-    )
-    fig.text(
-        0.5, 0.258,
-        "Frankford, Sauerwein, Bassner, Krusche, Breu",
-        fontsize=14, color=MUTED, ha="center", va="center",
-    )
-    fig.text(
-        0.5, 0.232,
-        "ICSE-SEET 2024 · doi.org/10.1145/3639474.3640061",
-        fontsize=14, color=MUTED, ha="center", va="center",
-    )
-
-    # Source line consolidated: stack credit + repo on one row.
-    fig.text(
-        0.5, 0.17,
-        "Source: github.com/eduardfrankford/ai-tutoring-citation-tree",
+        0.5, 0.300,
+        "Open source on GitHub — try it on your own paper.",
         fontsize=14, color=BLUE, ha="center", va="center",
     )
+
+    # Divider
+    ax.plot([0.18, 0.235], [0.235, 0.235], color=DIM, lw=0.8,
+            transform=fig.transFigure, zorder=2)
+    ax.plot([0.765, 0.82], [0.235, 0.235], color=DIM, lw=0.8,
+            transform=fig.transFigure, zorder=2)
     fig.text(
-        0.5, 0.142,
-        "Built on OpenAlex API · D3 v7 · GitHub Pages",
-        fontsize=12, color=MUTED, ha="center", va="center",
+        0.5, 0.235, "SEED PAPER",
+        fontsize=10, color=MUTED, ha="center", va="center",
+        fontweight="bold",
     )
 
-    _footer(ax, 6)
+    # Minimal seed paper attribution.
+    fig.text(
+        0.5, 0.190,
+        "“AI-Tutoring in Software Engineering Education”",
+        fontsize=15, color=TEXT, ha="center", va="center",
+        fontweight="medium", style="italic",
+    )
+    fig.text(
+        0.5, 0.157,
+        "Frankford, Sauerwein, Bassner, Krusche, Breu  ·  ICSE-SEET 2024",
+        fontsize=12, color=MUTED, ha="center", va="center",
+    )
+    fig.text(
+        0.5, 0.130,
+        "doi.org/10.1145/3639474.3640061",
+        fontsize=11, color=MUTED, ha="center", va="center",
+    )
+
+    _footer(ax, 4)
     return fig
 
 
@@ -746,12 +756,10 @@ def main() -> None:
     blob = _load()
 
     slides = [
-        ("slide1_hero", slide1),
-        ("slide2_reframe", slide2),
+        ("slide1_milestone", slide1),
+        ("slide2_discovery", slide2),
         ("slide3_tree", slide3),
-        ("slide4_wavefront", slide4),
-        ("slide5_top5", slide5),
-        ("slide6_cta", slide6),
+        ("slide4_end", slide4_end),
     ]
 
     pdf_path = OUT_DIR / "linkedin_carousel.pdf"
