@@ -419,7 +419,7 @@ def slide3(blob: dict) -> plt.Figure:
         biggest_size = d1_subtrees[biggest_id]
         bx, by = pos[biggest_id]
         tree_ax.annotate(
-            f"Iris — my follow-up project\n({biggest_size} papers branch off it)",
+            f"Iris — follow-up paper with TUM\n({biggest_size} papers branch off it)",
             xy=(bx + 0.5, by - 0.15),
             xytext=(bx - 120, by + 0.30),
             fontsize=12, color=CORAL, fontweight="medium",
