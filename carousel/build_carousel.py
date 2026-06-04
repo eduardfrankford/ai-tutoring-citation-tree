@@ -708,43 +708,11 @@ def slide4_end(blob: dict) -> plt.Figure:
         fontsize=22, color=CORAL, ha="center", va="center", fontweight="bold",
     )
 
-    # Engagement hook — drives comments, which boosts LinkedIn reach.
+    # Just the page indicator — the warm headline + the link is the whole slide.
     fig.text(
-        0.5, 0.300,
-        "Open source on GitHub — try it on your own paper.",
-        fontsize=14, color=BLUE, ha="center", va="center",
+        0.96, 0.025, "4 / 4",
+        fontsize=11, color=MUTED, ha="right", va="bottom",
     )
-
-    # Divider
-    ax.plot([0.18, 0.235], [0.235, 0.235], color=DIM, lw=0.8,
-            transform=fig.transFigure, zorder=2)
-    ax.plot([0.765, 0.82], [0.235, 0.235], color=DIM, lw=0.8,
-            transform=fig.transFigure, zorder=2)
-    fig.text(
-        0.5, 0.235, "SEED PAPER",
-        fontsize=10, color=MUTED, ha="center", va="center",
-        fontweight="bold",
-    )
-
-    # Minimal seed paper attribution.
-    fig.text(
-        0.5, 0.190,
-        "“AI-Tutoring in Software Engineering Education”",
-        fontsize=15, color=TEXT, ha="center", va="center",
-        fontweight="medium", style="italic",
-    )
-    fig.text(
-        0.5, 0.157,
-        "Frankford, Sauerwein, Bassner, Krusche, Breu  ·  ICSE-SEET 2024",
-        fontsize=12, color=MUTED, ha="center", va="center",
-    )
-    fig.text(
-        0.5, 0.130,
-        "doi.org/10.1145/3639474.3640061",
-        fontsize=11, color=MUTED, ha="center", va="center",
-    )
-
-    _footer(ax, 4)
     return fig
 
 
