@@ -730,8 +730,37 @@ def main() -> None:
         ("slide4_end", slide4_end),
     ]
 
+    # PDF document metadata — picked up by screen readers (NVDA, VoiceOver,
+    # JAWS) when the document opens, and shown in the title bar of every PDF
+    # viewer. The Subject field gives screen-reader users a content summary
+    # before they start swiping through pages.
+    pdf_metadata = {
+        "Title": (
+            "100 citations on my first PhD paper, and the 977-paper "
+            "citation tree I found by following each one — "
+            "Frankford et al., AI-Tutoring in Software Engineering "
+            "Education (ICSE-SEET 2024)"
+        ),
+        "Author": "Eduard Frankford",
+        "Subject": (
+            "A 4-slide carousel about the full forward citation tree of one "
+            "2024 PhD paper. Slide 1: milestone of 100 direct citations. "
+            "Slide 2: discovery that 977 papers built on it across 8 "
+            "generations, shown as a radial tree. Slide 3: top-down "
+            "hierarchical view of the tree with an annotation for the "
+            "Iris follow-up paper. Slide 4: takeaway and a link to the "
+            "interactive web visualization at "
+            "eduardfrankford.github.io/ai-tutoring-citation-tree"
+        ),
+        "Keywords": (
+            "citation analysis, AI tutoring, software engineering education, "
+            "ICSE-SEET 2024, OpenAlex, citation tree, PhD milestone, "
+            "data visualization, D3, accessibility"
+        ),
+    }
+
     pdf_path = OUT_DIR / "linkedin_carousel.pdf"
-    with PdfPages(pdf_path) as pdf:
+    with PdfPages(pdf_path, metadata=pdf_metadata) as pdf:
         for name, fn in slides:
             print(f"Rendering {name}…")
             fig = fn(blob)
@@ -742,6 +771,7 @@ def main() -> None:
             print(f"  → {png_path.relative_to(OUT_DIR.parent)} ({png_path.stat().st_size // 1024} KB)")
 
     print(f"\nPDF: {pdf_path.relative_to(OUT_DIR.parent)} ({pdf_path.stat().st_size // 1024} KB)")
+    print(f"  Title: {pdf_metadata['Title']}")
 
 
 if __name__ == "__main__":
